@@ -3,25 +3,27 @@ const express = require('express')
 const app = express()
 const pool = require('./config/config')
 
+console.log(process.env)
+
 app.route('/').get((request, response) => {
     response.send('Hello world!')
 })
 
-app.route('/api/:group').get((request, response) => {
+app.route('/api/t/:group').get((request, response) => {
     let group = request.params["group"]
     response.send(`Hello  ${group} !`)
 })
 
-app.route('/api/students').get((request,response) => {
+app.route('/api/students').get((req, res) => {
     pool.query('Select * from students', (err, result, fields) => {
         if (err) throw err
-        response.send(result);
+        res.send(result);
     })
 })
 
 app.route('/api/students/:n_z').get((request,response) => {
     const n_z = request.params['n_z']
-    pool.query('Select * from students where n_z = ?',  [n_Z], 
+    pool.query('Select * from students where n_z = ?',  [n_z], 
        (err, result, fields) => {
         if (err) throw err
         response.send(result);
