@@ -3,6 +3,7 @@ const express = require('express')
 const app = express()
 const pool = require('./config/config')
 const bodyParser = require('body-parser')
+const cors = require('cors')
 
 
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -37,8 +38,6 @@ app.route('/api/t/:group').get((request, response) => {
     response.send(`Hello  ${group} !`)
 })
 
-app.router('/api/students/:n_z').put((request, response))
-
 app.route('/api/students').get((req, res) => {
     pool.query('Select * from students', (err, result, fields) => {
         if (err) throw err
@@ -55,6 +54,6 @@ app.route('/api/students/:n_z').get((request,response) => {
     })
 })
 
-app.listen(8080, () => {
+app.listen(8081, () => {
     console.log('Server started')
 })
